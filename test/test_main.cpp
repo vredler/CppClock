@@ -1,6 +1,6 @@
+#pragma once
 #define CATCH_CONFIG_RUNNER
-#include "../src/includes/catch.hpp";
-#include "../src/headers/Clock.h";
+#include "../src/include/catch.hpp"
 
 int main(int argc, char* argv[])
 {

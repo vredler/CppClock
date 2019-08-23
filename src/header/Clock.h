@@ -1,7 +1,14 @@
-#include <iostream>;
+#pragma once
+#include <iostream>
 
 class Clock
 {
+    private:
+        int _hour;
+        int _minute;
+        int _second;
+        bool _isMilitaryTime;
+
     public:
         //Constructors
         Clock(int hour, int minute, int second);
@@ -14,18 +21,11 @@ class Clock
         int const get_minute();
         int const get_second();
         bool const is_military_time();
+        bool const is_pm();
 
         //Non const methods
         void switch_clock_type();
-        void add_seconds(int amountOfSeconds);
-        void add_minutes(int amountOfMinutes);
-        void add_hours(int amountOfHours);
-
-    private:
-        int hour;
-        int minute;
-        int second;
-        bool isMilitaryTime;
-
-        bool get_suffix();
+        // void add_seconds(int amountOfSeconds);
+        // void add_minutes(int amountOfMinutes);
+        // void add_hours(int amountOfHours);
 };
