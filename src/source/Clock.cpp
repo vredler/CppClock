@@ -5,7 +5,10 @@
 #include <string>
 #include <assert.h>
 
-Clock::Clock(int hour, int minute, int second)
+Clock::Clock(
+    int hour,
+    int minute,
+    int second)
 {
     _hour = hour;
     _minute = minute;
@@ -15,12 +18,15 @@ Clock::Clock(int hour, int minute, int second)
     time_cleanup();
 }
 
-Clock::Clock(int hour, int minute)
+Clock::Clock(
+    int hour,
+    int minute)
     : Clock(hour, minute, 0)
 {
 }
 
-Clock::Clock(int hour)
+Clock::Clock(
+    int hour)
     : Clock(hour, 0, 0)
 {
 }
@@ -64,10 +70,16 @@ std::string Clock::to_string() const
 
     if (_hour == 24 || _hour == 00)
     {
-        return to_string_with_leading_0(12) + ":" + to_string_with_leading_0(_minute) + ":" + to_string_with_leading_0(_second) + " AM";
+        return to_string_with_leading_0(12) + ":" +
+               to_string_with_leading_0(_minute) + ":" +
+               to_string_with_leading_0(_second) +
+               " AM";
     }
 
-    return to_string_with_leading_0(_hour - 12) + ":" + to_string_with_leading_0(_minute) + ":" + to_string_with_leading_0(_second) + " AM";
+    return to_string_with_leading_0(_hour - 12) + ":" +
+           to_string_with_leading_0(_minute) + ":" +
+           to_string_with_leading_0(_second) +
+           " AM";
 }
 
 void Clock::switch_clock_type()
@@ -77,23 +89,26 @@ void Clock::switch_clock_type()
 
 bool Clock::is_pm() const
 {
-    if (_hour > 11)
-    {
-        return true;
-    }
-
-    return false;
+    return _hour > 11;
 }
 
-Clock Clock::operator+(int seconds)
+Clock Clock::operator+(
+    int seconds)
 {
-    Clock returnClock(_hour, _minute, _second + seconds);
+    Clock returnClock(
+        _hour,
+        _minute,
+        _second + seconds);
     return returnClock;
 }
 
-Clock Clock::operator-(int seconds)
+Clock Clock::operator-(
+    int seconds)
 {
-    Clock returnClock(_hour, _minute, _second - seconds);
+    Clock returnClock(
+        _hour,
+        _minute,
+        _second - seconds);
     return returnClock;
 }
 
@@ -106,7 +121,11 @@ Clock Clock::operator++()
 
 Clock Clock::operator++(int)
 {
-    Clock temp(_hour, _minute, _second);
+    Clock temp(
+        _hour,
+        _minute,
+        _second);
+
     ++temp;
     ++_second;
     time_cleanup();
@@ -122,11 +141,106 @@ Clock Clock::operator--()
 
 Clock Clock::operator--(int)
 {
-    Clock temp(_hour, _minute, _second);
+    Clock temp(
+        _hour,
+        _minute,
+        _second);
+
     --temp;
     --_second;
     time_cleanup();
     return temp;
+}
+
+bool Clock::operator<(const Clock &compare)
+{
+    try
+    {
+        return !bigger_than(compare);
+    }
+    catch (const std::exception &e)
+    {
+        return false;
+    }
+}
+
+bool Clock::operator<=(const Clock &compare)
+{
+    if (is_equal(compare))
+        return true;
+
+    try
+    {
+        return !bigger_than(compare);
+    }
+    catch (const std::exception &e)
+    {
+        return false;
+    }
+}
+
+bool Clock::operator>(const Clock &compare)
+{
+    try
+    {
+        return bigger_than(compare);
+    }
+    catch (const std::exception &e)
+    {
+        return false;
+    }
+}
+
+bool Clock::operator>=(const Clock &compare)
+{
+    if (is_equal(compare))
+        return true;
+
+    try
+    {
+        return bigger_than(compare);
+    }
+    catch (const std::exception &e)
+    {
+        return false;
+    }
+}
+
+bool Clock::bigger_than(const Clock &compare)
+{
+    if (_hour < compare.get_hour())
+        return false;
+    if (_hour > compare.get_hour())
+        return true;
+
+    if (_minute < compare.get_minute())
+        return false;
+    if (_minute > compare.get_minute())
+        return true;
+
+    if (_second < compare.get_second())
+        return false;
+    if (_second > compare.get_second())
+        return true;
+
+    throw std::exception("is equal");
+}
+
+bool Clock::is_equal(const Clock &compare)
+{
+    return _hour == compare.get_hour() &&
+           _minute == compare.get_minute() &&
+           _second == compare.get_second();
+}
+
+bool Clock::operator==(const Clock &compare)
+{
+    return is_equal(compare);
+}
+
+bool Clock::operator!=(const Clock &compare)
+{
+    return !is_equal(compare);
 }
 
 void Clock::time_cleanup()

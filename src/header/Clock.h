@@ -11,6 +11,8 @@ private:
 
     void time_cleanup();
     void init(int hour, int minute, int second);
+    bool bigger_than(const Clock &compare);
+    bool is_equal(const Clock &compare);
 
 public:
     //Constructors
@@ -33,6 +35,12 @@ public:
     Clock operator++(int);
     Clock operator--();
     Clock operator--(int);
+    bool operator<(const Clock &compare);
+    bool operator<=(const Clock &compare);
+    bool operator>(const Clock &compare);
+    bool operator>=(const Clock &compare);
+    bool operator==(const Clock &compare);
+    bool operator!=(const Clock &compare);
 
     //Non const methods
     void switch_clock_type();

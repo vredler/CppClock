@@ -64,6 +64,8 @@ TEST_CASE("Check if AM OR PM", "[is_pm]")
     CHECK(amTest->is_pm() == false);
 }
 
+#pragma region + / -Operators
+
 TEST_CASE("Adding Clock by seconds to get new time", "[Clock+int]")
 {
     SECTION("Add 1 second")
@@ -113,6 +115,10 @@ TEST_CASE("Subtracting Clock by seconds to get new time", "[Clock-int]")
         CHECK(result.get_hour() == 14);
     }
 }
+
+#pragma endregion + / -Operators
+
+#pragma region Increment / Decrement
 
 TEST_CASE("Prefix increment Clock by 1 second", "[prefix Clock]")
 {
@@ -257,3 +263,135 @@ TEST_CASE("Postfix decrement Clock by 1 second", "[postdecrement Clock]")
         CHECK(clock.get_hour() == 13);
     }
 }
+
+#pragma endregion
+
+#pragma region Comparison Operators
+
+TEST_CASE("Less than operator")
+{
+    Clock clock(14, 21, 23);
+
+    SECTION("Positive check")
+    {
+        Clock diff(15, 1, 1);
+        CHECK((clock < diff) == true);
+    }
+
+    SECTION("Negative check")
+    {
+        Clock diff(13, 1, 1);
+        CHECK((clock < diff) == false);
+    }
+
+    SECTION("Equal results in false")
+    {
+        Clock diff(14, 21, 23);
+        CHECK((clock < diff) == false);
+    }
+}
+
+TEST_CASE("Greater than operator")
+{
+    Clock clock(14, 21, 23);
+
+    SECTION("Negative check")
+    {
+        Clock diff(15, 1, 1);
+        CHECK((clock > diff) == false);
+    }
+
+    SECTION("Positive check")
+    {
+        Clock diff(13, 1, 1);
+        CHECK((clock > diff) == true);
+    }
+
+    SECTION("Equal results in false")
+    {
+        Clock diff(14, 21, 23);
+        CHECK((clock > diff) == false);
+    }
+}
+
+TEST_CASE("Equal operator")
+{
+    Clock clock(14, 21, 23);
+
+    SECTION("Positive check")
+    {
+        Clock diff(14, 21, 23);
+        CHECK((clock == diff) == true);
+    }
+
+    SECTION("Negative check")
+    {
+        Clock diff(14, 21, 24);
+        CHECK((clock == diff) == false);
+    }
+}
+
+TEST_CASE("Not equal operator")
+{
+    Clock clock(14, 21, 23);
+
+    SECTION("Positive check")
+    {
+        Clock diff(14, 21, 24);
+        CHECK((clock != diff) == true);
+    }
+
+    SECTION("Negative check")
+    {
+        Clock diff(14, 21, 23);
+        CHECK((clock != diff) == false);
+    }
+}
+
+TEST_CASE("Less than or equal operator")
+{
+    Clock clock(14, 21, 23);
+
+    SECTION("Positive check")
+    {
+        Clock diff(15, 1, 1);
+        CHECK((clock <= diff) == true);
+    }
+
+    SECTION("Negative check")
+    {
+        Clock diff(13, 1, 1);
+        CHECK((clock <= diff) == false);
+    }
+
+    SECTION("Equal results in true")
+    {
+        Clock diff(14, 21, 23);
+        CHECK((clock <= diff) == true);
+    }
+}
+
+TEST_CASE("Greater than or equal operator")
+{
+    Clock clock(14, 21, 23);
+
+    SECTION("Negative check")
+    {
+        Clock diff(15, 1, 1);
+        CHECK((clock >= diff) == false);
+    }
+
+    SECTION("Positive check")
+    {
+        Clock diff(13, 1, 1);
+        CHECK((clock >= diff) == true);
+    }
+
+    SECTION("Equal results in false")
+    {
+        Clock diff(14, 21, 23);
+        CHECK((clock >= diff) == true);
+    }
+}
+
+#pragma endregion Comparison Operators
