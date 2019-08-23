@@ -395,3 +395,23 @@ TEST_CASE("Greater than or equal operator")
 }
 
 #pragma endregion Comparison Operators
+
+#pragma region I / O Operators
+
+TEST_CASE("Output operator")
+{
+    Clock clock(14, 1, 23);
+
+    std::stringstream stream;
+    stream << clock;
+
+    std::string clockString = stream.str();
+
+    CHECK(clockString == "14:01:23");
+}
+
+// TEST_CASE("Input operator")
+// {
+// }
+
+#pragma endregion I / O Operators

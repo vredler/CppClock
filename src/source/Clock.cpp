@@ -92,6 +92,12 @@ bool Clock::is_pm() const
     return _hour > 11;
 }
 
+std::ostream &operator<<(std::ostream &out, const Clock &clock)
+{
+    out << clock.to_string();
+    return out;
+}
+
 Clock Clock::operator+(
     int seconds)
 {

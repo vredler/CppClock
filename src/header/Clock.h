@@ -41,6 +41,7 @@ public:
     bool operator>=(const Clock &compare);
     bool operator==(const Clock &compare);
     bool operator!=(const Clock &compare);
+    friend std::ostream &operator<<(std::ostream &out, const Clock &clock);
 
     //Non const methods
     void switch_clock_type();
